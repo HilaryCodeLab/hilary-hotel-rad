@@ -20,6 +20,9 @@ Route::get('/', function () {
 Route::get('/rates/{rate}/delete', ['as' => 'rates.delete', 'uses' => 'RatesController@delete']);
 Route::resource('/rates', 'RatesController');
 
+Route::get('/feedbackSubjects/{feedbackSubject}/delete', ['as' => 'feedbackSubjects.delete', 'uses' => 'FeedbackSubjectsController@delete']);
+Route::resource('/feedbackSubjects', 'FeedbackSubjectsController');
+
 
 Auth::routes();
 

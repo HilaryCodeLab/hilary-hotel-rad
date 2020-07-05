@@ -23,6 +23,8 @@ Route::resource('/rates', 'RatesController');
 Route::get('/feedbackSubjects/{feedbackSubject}/delete', ['as' => 'feedbackSubjects.delete', 'uses' => 'FeedbackSubjectsController@delete']);
 Route::resource('/feedbackSubjects', 'FeedbackSubjectsController');
 
+Route::get('/roomStatuses/{roomStatus}/delete', ['as' => 'roomStatuses.delete', 'uses' => 'RoomStatusesController@delete']);
+Route::resource('/roomStatuses', 'RoomStatusesController');
 
 Auth::routes();
 

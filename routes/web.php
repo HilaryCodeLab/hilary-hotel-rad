@@ -16,3 +16,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/rates/{rate}/delete', ['as' => 'rates.delete', 'uses' => 'RatesController@delete']);
+Route::resource('/rates', 'RatesController');
+
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

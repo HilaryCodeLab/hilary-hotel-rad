@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use http\Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -48,8 +49,22 @@ class Handler extends ExceptionHandler
      *
      * @throws \Throwable
      */
-    public function render($request, Throwable $exception)
+//    public function render($request, Throwable $exception)
+//    {
+//        return parent::render($request, $exception);
+//    }
+
+    public function render($request, $exception)
+
     {
+
+        if ($exception instanceof SpatiePermissionExceptionsUnauthorizedException) {
+
+            return response()->json(['User have not permission for this page access.']);
+
+        }
+
         return parent::render($request, $exception);
+
     }
 }

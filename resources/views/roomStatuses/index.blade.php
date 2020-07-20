@@ -7,7 +7,7 @@
 @section('content')
     <div class="container">
         <p>This page will show list of Room Statuses</p>
-        <table class="table">
+        <table id="myTable" class="table">
             <thead class="thead-dark">
             <tr>
                 <th scope="col">Id</th>
@@ -34,6 +34,17 @@
             @endforeach
             </tbody>
         </table>
+        {{$roomStatuses->links()}}
     </div>
+
 @endsection
 
+@section('scripts')
+
+    <script>
+        $(document).ready( function () {
+            $('#myTable').DataTable();
+        } );
+    </script>
+
+@endsection

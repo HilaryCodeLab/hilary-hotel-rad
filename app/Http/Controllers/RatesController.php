@@ -14,7 +14,14 @@ class RatesController extends Controller
      */
     public function index()
     {
-        $rates=Rate::get();
+        if(request()->has('room_type')){
+            $rates = Rate::where('room_type',request('room_type'))
+                ->paginate(5);
+        }
+        else{
+            $rates=Rate::paginate(5);
+        }
+
         return view('rates.index',compact('rates'));
     }
 
@@ -37,6 +44,7 @@ class RatesController extends Controller
     public function store(Rate $rate)
     {
         $rate->rate = request('rate');
+        $rate->room_type = request('room_type');
         $rate->description = request('description');
 
         $rate->save();

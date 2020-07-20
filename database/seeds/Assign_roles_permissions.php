@@ -67,5 +67,6 @@ class Assign_roles_permissions extends Seeder
         $manager->assignRole($role5);
 
 
+
     }
 }

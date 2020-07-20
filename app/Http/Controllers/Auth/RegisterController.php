@@ -53,6 +53,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'image'=>['sometimes','image','mimes:jpg,jpeg,png,gif,bmp,svg','max:1000']
         ]);
     }
 
@@ -64,6 +65,23 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        if(request()->has('image')){
+          $imageUploaded = request()->file('image');
+
+            //create unique name for every image, $imageUploaded is extension of image
+          $imageName = time() . '.' . $imageUploaded->getClientOriginalExtension();
+          $imagePath = public_path('/img/');
+          $imageUploaded->move($imagePath,$imageName);
+
+          return User::create([
+                                    'name' => $data['name'],
+                                    'email' => $data['email'],
+                                    'password' => Hash::make($data['password']),
+                                    'image'=>'img/' . $imageName,
+                                ]);
+
+        }
+        //if no request for image, run the following code
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],

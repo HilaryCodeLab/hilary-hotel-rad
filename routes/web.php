@@ -1,6 +1,8 @@
 <?php
 
+use App\Rate;
 use Illuminate\Support\Facades\Route;
+use Spatie\QueryBuilder\QueryBuilder;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +19,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/bookings/create',function (){
+    return view('bookings.create');
+});
+
 Route::get('/rates/{rate}/delete', ['as' => 'rates.delete', 'uses' => 'RatesController@delete']);
 Route::resource('/rates', 'RatesController');
 
@@ -30,8 +36,22 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::group(['middleware'=>['auth']],function (){
+Route::group(['middleware'=>['role:Admin|Maintenance|Manager']],function (){
     Route::resource('roles','RoleController');
     Route::resource('users','UserController');
-    Route::resource('products','ProductController');
+
 });
+
+Route::group(['middleware' => ['role:Booking Staff|Admin|Maintenance|Manager']], function () {
+    Route::resource('roomStatuses','RoomStatusesController');
+
+});
+
+//Route::get('/',function (){
+//    $users = QueryBuilder::for(User::class)
+//        ->allowedFilters(['name'])
+//        ->get();
+//    return $users;
+//});
+
+

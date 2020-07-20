@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\RoomStatuses;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
+
 
 class RoomStatusesController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $roomStatuses=RoomStatuses::get();
+//        $roomStatuses=RoomStatuses::get();
+        $roomStatuses=RoomStatuses::paginate(5);
         return view('roomStatuses.index',compact('roomStatuses'));
     }
 

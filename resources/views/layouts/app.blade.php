@@ -11,13 +11,22 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+{{--    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>--}}
+{{--    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>--}}
+{{--    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>--}}
+
+{{--    <script src="{{ asset('js/dataTables.min.js') }}" defer></script>--}}
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
+{{--    <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">--}}
+{{--    <link rel="stylesheet" type="text/css" href="{{ asset('css/dataTables.min.css') }}">--}}
+{{--    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">--}}
+{{--    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">--}}
 </head>
 <body>
 <div id="app">
@@ -52,13 +61,21 @@
 
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <img src="{{asset(Auth::user()->image)}}"
+                                     style="border-radius:10%;width:30px;
+                                            height:30px; margin-right:10px;">
+
                                 {{ Auth::user()->name }} <span class="caret"></span>
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('users.index') }}">Manage Users</a>
-                                <a class="dropdown-item" href="{{ route('roles.index') }}">Manage Role</a>
-                                <a class="dropdown-item" href="{{ route('products.index') }}">Manage Product</a>
+                                @role('Admin|Manager')
+                                    <a class="dropdown-item" href="{{ route('users.index') }}">Manage Users</a>
+                                    <a class="dropdown-item" href="{{ route('roles.index') }}">Manage Role</a>
+                                @endrole
+                                @role('Admin|Manager|Booking Staff')
+                                    <a class="dropdown-item" href="{{ route('rates.index') }}">Manage Rooms</a>
+                                @endrole
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

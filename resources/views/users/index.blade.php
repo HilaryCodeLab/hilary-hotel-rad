@@ -44,7 +44,7 @@
 
                 <th scope="col">Id</th>
 
-                <th scope="col">Name</th>
+                <th scope="col">Full Name</th>
 
                 <th scope="col">Email</th>
 
@@ -58,7 +58,7 @@
             @foreach ($data as $key => $user)
                 <tr>
                     <td>{{ ++$i }}</td>
-                    <td>{{ $user->name }}</td>
+                    <td>{{ $user->given_name }} {{$user->family_name}}</td>
                     <td>{{ $user->email }}</td>
                     <td>
                         @if(!empty($user->getRoleNames()))

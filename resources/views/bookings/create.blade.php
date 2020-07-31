@@ -1,75 +1,95 @@
 @extends('layouts.app')
 
-@section('title')
-Room Booking
-@endsection
-
 @section('content')
     <div class="container">
-        <h1>Room Booking</h1>
-        <form>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="inputFirstName">First Name</label>
-                    <input type="text" class="form-control" id="inputFirstName">
+        <h3>Create Booking</h3>
+{{--    {!! Form::model('booking',['method'=>'POST','url' => '/bookings']) !!}--}}
+    {!! Form::open(['method' => 'POST', 'route' => ['bookings.index']]) !!}
+{{--        {!! Form::open(['method' => 'POST', 'url' => '/bookings']) !!}--}}
+                <div class="form-group row">
+                    <div class="col-xs-12 form-group">
+{{--                        <strong>Guest:</strong>--}}
+                        {!! Form::label('user_id','Guest',['class'=>'control-label']) !!}
+                        {!! Form::select('user_id', $users, old('user_id'), ['class' => 'form-control select2']) !!}
+                        <p class="help-block"></p>
+                        @if($errors->has('user_id'))
+                            <p class="help-block">
+                                {{ $errors->first('user_id') }}
+                            </p>
+                        @endif
+                    </div>
                 </div>
-                <div class="form-group col-md-6">
-                    <label for="inputLastName">Last Name</label>
-                    <input type="text" class="form-control" id="inputLastName">
+                <div class="form-group row">
+                    <div class="col-xs-12 form-group">
+{{--                        <strong>Room:</strong>--}}
+                        {!! Form::label('room_id','Room',['class'=>'control-label']) !!}
+                        {!! Form::select('room_id', $rooms, old('room_id'), ['class' => 'form-control select2']) !!}
+                        <p class="help-block"></p>
+                        @if($errors->has('room_id'))
+                            <p class="help-block">
+                                {{ $errors->first('room_id') }}
+                            </p>
+                        @endif
+                    </div>
                 </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="inputEmail">Email Address</label>
-                    <input type="email" class="form-control" id="inputEmail">
+                <div class="form-group row">
+                    <div class="col-xs-12 form-group">
+{{--                        <strong>Start at:</strong>--}}
+                        {!! Form::label('start_at','Start at',['class'=>'control-label']) !!}
+{{--                        {!! Form::text('start_at', old('start_at'), ['class' => 'form-control datetimepicker', 'placeholder' => '', 'required' => '']) !!}--}}
+                        {!!Form::date('start_at',\Carbon\Carbon::now(), ['required' => '','class' => 'form-control'])!!}
+                        <p class="help-block"></p>
+                        @if($errors->has('start_at'))
+                            <p class="help-block">
+                                {{ $errors->first('start_at') }}
+                            </p>
+                        @endif
+                    </div>
                 </div>
-                <div class="form-group col-md-6">
-                    <label for="inputPhone">Phone Number</label>
-                    <input type="text" class="form-control" id="inputPhone">
+                <div class="form-group row">
+                    <div class="col-xs-12 form-group">
+{{--                        <strong>End at:</strong>--}}
+                        {!! Form::label('end_at','End at',['class'=>'control-label']) !!}
+{{--                        {!! Form::text('end_at', old('end_at'), ['class' => 'form-control datetimepicker', 'placeholder' => '', 'required' => '']) !!}--}}
+                        {!!Form::date('end_at',\Carbon\Carbon::now(), ['required' => '','class' => 'form-control'])!!}
+                        <p class="help-block"></p>
+                        @if($errors->has('end_at'))
+                            <p class="help-block">
+                                {{ $errors->first('end_at') }}
+                            </p>
+                        @endif
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="room">Room</label>
-
-                <select multiple class="form-control" id="room">
-{{--                    @foreach($rates as $rate)--}}
-{{--                        <option>{{$rate->descriptions}}</option>--}}
-{{--                    @endforeach--}}
-
-
-                    <option>Single</option>
-                    <option>Double</option>
-                    <option>Princess</option>
-                    <option>Executive</option>
-                    <option>Hollywood</option>
-                    <option>President</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="numberOfGuests">Number of Guests</label>
-                <select multiple class="form-control" id="numberOfGuests">
-                    <option>1</option>
-                    <option>2+</option>
-                </select>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="startDate">Start date:</label>
-                    <input type="date" id="startDate" class="form-control"
-                           value=""
-                           min="2018-01-01" max="2099-12-31">
+                <div class="form-group row">
+                    <div class="col-xs-12 form-group">
+{{--                        <strong>Notes:</strong>--}}
+                        {!! Form::label('notes','Notes',['class'=>'control-label']) !!}
+                        {!! Form::textarea('notes', old('notes'), ['class' => 'form-control ', 'placeholder' => '', 'required' => '']) !!}
+                        <p class="help-block"></p>
+                        @if($errors->has('notes'))
+                            <p class="help-block">
+                                {{ $errors->first('notes') }}
+                            </p>
+                        @endif
+                    </div>
                 </div>
-                <div class="form-group col-md-6">
-                    <label for="endDate">End date:</label>
-                    <input type="date" id="endDate" class="form-control"
-                           value=""
-                           min="2018-01-01" max="2099-12-31">
-                </div>
-            </div>
-            <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Book</button>
-            </div>
-        </form>
+        {!! Form::submit('Submit', ['class' => 'btn btn-danger']) !!}
+        {!! Form::close() !!}
     </div>
 
-@endsection
+
+
+@stop
+
+@section('javascript')
+    @parent
+    <script src="https://cdn.datatables.net/select/1.2.0/js/dataTables.select.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+{{--    <script>--}}
+{{--        $('.datetimepicker').datetimepicker({--}}
+{{--            format: "YYYY-MM-DD HH:mm"--}}
+{{--        });--}}
+{{--    </script>--}}
+@stop

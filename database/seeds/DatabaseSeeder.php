@@ -16,10 +16,10 @@ class DatabaseSeeder extends Seeder
             RateSeeder::class,
             FeedbackSubjectsSeeder::class,
             RoomStatusesSeeder::class,
-            CreateAdminUserSeeder::class,
-            PermissionTableSeeder::class,
             RoleSeeder::class,
+            PermissionTableSeeder::class,
             Assign_roles_permissions::class,
+            BookingSeeder::class,
 
          ]);
     }

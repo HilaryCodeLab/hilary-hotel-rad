@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\FeedbackSubjects;
+use Illuminate\Support\Facades\Auth;
 
 class FeedbackSubjectsController extends Controller
 {
@@ -34,6 +35,11 @@ class FeedbackSubjectsController extends Controller
         $feedbackSubject->description = request('description');
 
         $feedbackSubject->save();
+
+        if(Auth::user()->hasRole('Guest')){
+            return redirect('/home');
+        }
+
         return redirect('/feedbackSubjects');
     }
 

@@ -4,6 +4,7 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Database\Seeder;
 use App\User;
+use Carbon\Carbon;
 
 class Assign_roles_permissions extends Seeder
 {
@@ -15,6 +16,21 @@ class Assign_roles_permissions extends Seeder
     {
 
         //Assign existing roles to permissions
+        //role:admin
+        $roleAdmin= Role::find(1);
+        $permissions = Permission::pluck('id','id')->all();
+        $roleAdmin->syncPermissions($permissions);
+        $admin =  User::create
+        ([
+             'given_name'=> 'Marry',
+             'family_name'=>'Jane',
+             'dob'=>Carbon::create('1972','06','14'),
+             'email'=> 'admin@gmail.com',
+             'password'=> bcrypt('mary@123456')
+         ]);
+        $admin->assignRole($roleAdmin);
+
+
         //role:booking staff
         $role1= Role::find(2);
         $role1->givePermissionTo('roomStatus-list');
@@ -23,7 +39,9 @@ class Assign_roles_permissions extends Seeder
         $role1->givePermissionTo('roomStatus-delete');
         $bookingStaff = User::create
         ([
-            'name'=> 'Norah Jones',
+            'given_name'=> 'Norah',
+            'family_name'=>'Jones',
+            'dob'=>Carbon::create('1992','12','15'),
             'email'=> 'bookingstaff@mail.com',
             'password'=> bcrypt('bs@123456')
         ]);
@@ -36,7 +54,9 @@ class Assign_roles_permissions extends Seeder
         $role2->givePermissionTo('feedback-list');
         $generalStaff = User::create
         ([
-             'name'=> 'Peter Alexander',
+             'given_name'=> 'Peter',
+             'family_name'=>'Alexander',
+             'dob'=>Carbon::create('1985','03','13'),
              'email'=> 'generalstaff@mail.com',
              'password'=> bcrypt('gs@123456')
          ]);
@@ -48,7 +68,9 @@ class Assign_roles_permissions extends Seeder
         $role4->syncPermissions($permissions);
         $maintenance =  User::create
         ([
-             'name'=> 'Gordon Ramsay',
+             'given_name'=> 'Gordon',
+             'family_name'=>'Ramsay',
+             'dob'=>Carbon::create('1972','04','15'),
              'email'=> 'maintenance@mail.com',
              'password'=> bcrypt('m@123456')
          ]);
@@ -60,11 +82,27 @@ class Assign_roles_permissions extends Seeder
         $role5->syncPermissions($permissions);
         $manager =  User::create
         ([
-             'name'=> 'Harry Patterson',
+             'given_name'=> 'Harry',
+             'family_name'=>'Patterson',
+             'dob'=>Carbon::create('1975','05','27'),
              'email'=> 'hotelmanager@mail.com',
              'password'=> bcrypt('hm@123456')
          ]);
         $manager->assignRole($role5);
+
+        //role:guest
+        $role6 = Role::find(6);
+        $role6 -> givePermissionTo('user-edit');
+        $role6 -> givePermissionTo('user-list');
+        $guest = User::create
+        ([
+             'given_name'=> 'Jean',
+             'family_name'=>'Pierre',
+             'dob'=>Carbon::create('1988','02','14'),
+             'email'=> 'jeanpierre@mail.com',
+             'password'=> bcrypt('jp@123456')
+         ]);
+        $guest->assignRole($role6);
 
 
 

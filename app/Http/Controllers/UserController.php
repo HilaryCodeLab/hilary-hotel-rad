@@ -8,6 +8,8 @@ use App\User;
 use Spatie\Permission\Models\Role;
 use DB;
 use Hash;
+use Illuminate\Support\Arr;
+use Closure;
 
 
 class UserController extends Controller
@@ -67,7 +69,10 @@ class UserController extends Controller
     {
 
         $this->validate($request, [
-            'name' => 'required',
+//            'name' => 'required',
+            'given_name'=> 'required',
+            'family_name'=>'required',
+            'dob'=>'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|same:confirm-password',
             'roles' => 'required'
@@ -125,7 +130,7 @@ class UserController extends Controller
         $roles = Role::pluck('name','name')->all();
         $userRole = $user->roles->pluck('name','name')->all();
 
-        return view('users.edit',compact('user','roles','userRole'));
+        return view('users.update',compact('user','roles','userRole'));
 
     }
 
@@ -145,25 +150,37 @@ class UserController extends Controller
 
      */
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, Closure $manager)
     {
         $this->validate($request, [
-            'name' => 'required',
+            'family_name'=>'required',
+            'given_name' => 'required',
+            'dob'=>'required',
+            'image'=>['sometimes','image','mimes:jpg,jpeg,png,gif,bmp,svg','max:1000'],
             'email' => 'required|email|unique:users,email,'.$id,
             'password' => 'same:confirm-password',
             'roles' => 'required'
 
         ]);
         $input = $request->all();
+        if(!empty($input['image'])){
+            $file = $input['image'];
+            $fileName = $file->getClientOriginalName();
+            $extension = $file->getClientOriginalExtension();
+            $picture = $fileName . time() . '.' . $extension;
+            $imagePath = public_path('/img/');
+            $file->move($imagePath,$picture);
 
+            $input['image'] = "$imagePath/{$picture}";
+        }
         if(!empty($input['password'])){
 
             $input['password'] = Hash::make($input['password']);
 
-        }else{
+        }
+        else{
 
-            $input = array_except($input,array('password'));
-
+            $input = Arr::except($input,array('password'));
         }
         $user = User::find($id);
 
@@ -172,6 +189,9 @@ class UserController extends Controller
         DB::table('model_has_roles')->where('model_id',$id)->delete();
         $user->assignRole($request->input('roles'));
 
+        if(!$request->user()->hasRole($manager)){
+            return redirect()->view('home');
+        }
         return redirect()->route('users.index')
 
             ->with('success','User updated successfully');

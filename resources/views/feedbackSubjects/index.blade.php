@@ -7,6 +7,7 @@
 @section('content')
     <div class="container">
         <p>This page will show list of Feedback Subjects</p>
+
         <table class="table">
             <thead class="thead-dark">
             <tr>

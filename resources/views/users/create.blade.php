@@ -57,14 +57,31 @@
 
             <div >
 
-                <strong>Name:</strong>
+                <strong>First Name:</strong>
 
-                {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
+                {!! Form::text('given_name', null, array('placeholder' => 'First Name','class' => 'form-control')) !!}
 
             </div>
 
         </div>
 
+        <div >
+
+            <div >
+
+                <strong>Last Name:</strong>
+
+                {!! Form::text('family_name', null, array('placeholder' => 'Family Name','class' => 'form-control')) !!}
+
+            </div>
+
+        </div>
+        <div>
+            <div>
+                <strong>Date of birth:</strong>
+                {{ Form::text('dob', null, ['class' => 'form-control', 'id'=>'datetimepicker']) }}
+            </div>
+        </div>
         <div >
 
             <div >
@@ -127,3 +144,9 @@
 
 
 @endsection
+@section('javascript')
+<script>
+    $('#datetimepicker').datetimepicker({
+        format: 'yyyy-mm-dd'
+    });
+</script>

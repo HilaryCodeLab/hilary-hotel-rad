@@ -7,6 +7,7 @@
 @section('content')
     <div class="container">
         <p>This page will show list of rates</p>
+        <a href="{{route('rates.create')}}" class="btn btn-success">Create new</a>
         <h6 class="font-weight-bold">Filter:</h6>
         <a href="{{route('rates.index')}}/?room_type=Single"><span class="badge-pill badge-primary">Single</span></a>
         <a href="{{route('rates.index')}}/?room_type=Double"><span class="badge-pill badge-primary">Double</span></a>

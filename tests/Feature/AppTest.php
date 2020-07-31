@@ -75,4 +75,9 @@ class AppTest extends TestCase
         $response->assertStatus(200);
     }
 
+    public function test_bookings_create(){
+        $response = $this->get('bookings/create');
+        $response->assertSuccessful();
+    }
+
 }

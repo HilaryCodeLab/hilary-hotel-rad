@@ -7,6 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(FeedbackSubjects::class, function (Faker $faker) {
     return [
-        //
+        "subject"=>$faker->title,
+        "description"=>$faker->paragraph,
     ];
 });

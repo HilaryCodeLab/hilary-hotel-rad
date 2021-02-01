@@ -2,7 +2,7 @@
 ## About 
 hilary-hotel-rad
 
-A hotel management system is a web application built using Laravel framework. It is a RAD project for assignment in North Metropolitan TAFE.
+A hotel management web application built using Laravel framework. It is a RAD project for assignment in North Metropolitan TAFE.
 
 ## Features
 
